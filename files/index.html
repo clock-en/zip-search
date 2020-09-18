@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>郵便番号検索アプリ</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+      integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w=="
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="./css/app.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+  </head>
+  <body>
+    <div id="app">
+      <header id="masthead" class="mdc-top-app-bar">
+        <div class="mdc-top-app-bar__row">
+          <section
+            class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start"
+          >
+            <h1 class="mdc-top-app-bar__title">郵便番号検索アプリ</h1>
+          </section>
+        </div>
+      </header>
+      <main id="content" class="mdc-top-app-bar--fixed-adjust page-content">
+        <div class="main">
+          <div id="zip-search-result" class="zip-search-result">
+            <h2 class="mdc-typography--headline3">住所検索結果</h2>
+            <p>郵便番号を入力し、検索ボタンをクリックしてください。</p>
+            <div id="result"></div>
+            <script type="text/template" id="addressTemplate">
+              <div class="mdc-typography--headline5"><%= results.length %>件の住所が見つかりました。</div>
+              <ul class="mdc-list" role="radiogroup">
+                <% results.forEach((item, index) => { %>
+                  <li class="mdc-list-item" role="radio" aria-checked="false">
+                    <label class="label-container">
+                      <span class="mdc-list-item__ripple"></span>
+                      <span class="mdc-list-item__graphic">
+                        <span class="mdc-radio">
+                          <input
+                            class="mdc-radio__native-control"
+                            type="radio"
+                            id="address-<%= item.zipcode %>-<%= index %>"
+                            name="address"
+                            value="<%= item.address1 %><%= item.address2 %><%= item.address3 %>"
+                          />
+                          <span class="mdc-radio__background">
+                            <span class="mdc-radio__outer-circle"></span>
+                            <span class="mdc-radio__inner-circle"></span>
+                          </span>
+                        </span>
+                      </span>
+                      <span class="mdc-list-item__text"><%= item.address1 %><%= item.address2 %><%= item.address3 %></span>
+                    </label>
+                  </li>
+                <% }); %>
+              </ul>
+            </script>
+          </div>
+        </div>
+        <div id="sidebar" class="sidebar">
+          <form id="zip-search" class="zip-search">
+            <div class="form-item-container">
+              <div class="mdc-text-field mdc-text-field--outlined text-field">
+                <input
+                  class="mdc-text-field__input"
+                  id="zip"
+                  type="text"
+                  name="zip"
+                  maxlength="8"
+                />
+                <div class="mdc-notched-outline">
+                  <div class="mdc-notched-outline__leading"></div>
+                  <div class="mdc-notched-outline__notch">
+                    <label for="zip" class="mdc-floating-label">郵便番号</label>
+                  </div>
+                  <div class="mdc-notched-outline__trailing"></div>
+                </div>
+              </div>
+              <div class="mdc-typography--caption">※半角でご入力ください。</div>
+              <div
+                class="form-error-message"
+                data-error-message="zip"
+                style="display: none"
+              ></div>
+            </div>
+            <div class="zip-search__footer">
+              <button type="submit" class="mdc-button mdc-button--raised">
+                <span class="mdc-button__ripple"></span>
+                検索
+              </button>
+            </div>
+          </form>
+        </div>
+      </main>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/lodash@4.17.20/lodash.min.js"
+      integrity="sha256-ur/YlHMU96MxHEsy3fHGszZHas7NzH4RQlD4tDVvFhw="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+    <script src="./js/form-app/validation.js"></script>
+    <script src="./js/form-app/zip-search.js"></script>
+    <script src="./js/index.js"></script>
+  </body>
+</html>
